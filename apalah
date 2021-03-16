@@ -1,0 +1,81 @@
+def mean_data(X):
+    N = len(X)
+    sum_X = 0
+    for i in range(N):
+        sum_X = sum_X + X[i] 
+    avg = sum_X/N 
+    return avg
+
+def min_data(X):
+    N = len(X)
+    min_X = X[0]
+    for i in range(1,N):
+        if X[i] < min_X :
+            min_X = X[i]
+    return min_X
+
+def max_data(X):
+    N = len(X)
+    max_X = X[0]
+
+    for i in range(1,N):
+        if X[i] > max_X:
+            max_X = X[i]
+    return max_X
+
+def var_data(X, mode ='populasi'):
+    N = len(X)
+    avg_X = mean_data(X)
+
+    sum_X = 0
+    for i in range(N):
+        sum_X = sum_X + (X[i]-avg_X)**2
+
+    if mode == 'populasi':
+        var_X = sum_X/N
+    elif mode == 'sampel' :
+        var_X = sum_X/(N-1)
+    else:
+        print('Pastikan hanya memilihmode populasi atau sampel')
+    return var_X
+
+def std_data(X):
+    var_X = var_data(X, mode='populasi')
+    std_X = var_X**(0.5)
+    return std_X
+
+def median_data(X):
+    X = sorted(X)
+    N = len(X)
+    if N%2 ==0:
+        n = int(N/2 - 1)
+        m = int(N/2)
+        M = (X[n] + X[m])/2
+    else :
+        i = int((N)/2)
+        M = X[i]
+    return M
+
+def cov_data(X,Y):
+    N = len(X)
+    avg_X = mean_data(X)
+    avg_Y = mean_data(Y)
+    sum_cov = 0
+    for i in range(N):
+        sum_cov = sum_cov + (X[i] - avg_X)*(Y[i] - avg_Y)
+        cov_XY = sum_cov / (N)
+
+    return cov_XY
+
+def corr_coeff(X,Y):
+    cov_XY = cov_data(X,Y)
+    std_X = std_data(X)
+    std_Y = std_data(Y)
+
+    r_xy = cov_XY / (std_X * std_Y)
+
+    return r_xy
+
+def koefisien_variansi(a):
+    koefisien_variansi = (std_data(a)/mean_data(a))*100
+    return koefisien_variansi
